@@ -164,6 +164,7 @@ function seen_spk() {
   let models_path = ["Model1", "Model2", "Model3", "Model4", "Model5", "Model6", "Model7"];
   let data = `
       <colgroup>
+        <col style="width: 5%;"> <!-- Sequence number column -->
         <col style="width: 10%;"> <!-- Reference speaker column -->
         <col style="width: 15%;"> <!-- Text column -->
   `;
@@ -175,6 +176,7 @@ function seen_spk() {
   
   data += `</colgroup>
       <tr>
+        <th><strong>No.</strong></th>
         <th style=""><strong>Reference Speaker</strong></th>
         <th style=""><strong>Text</strong></th>
   `;
@@ -185,13 +187,14 @@ function seen_spk() {
   
   data += '</tr>';
   
-  scenes.forEach(function(scene) {
+  scenes.forEach(function(scene, index) {
     let file = scene[0];
     let spk = scene[1];
     let text = scene[2];
     let scene_data = "";
   
     scene_data += '<tr>';
+    scene_data += '<td style="text-align: center;">' + (index + 1) + '</td>';
     scene_data += '<td style=""><audio controls="" style="width: 100%;" controls src="' + './raw/demos/Ref/' + spk + '_spk.wav' + '"></audio></td>';
     scene_data += '<td style=" font-size: 14px">' + text + '</td>';
     models_path.forEach(function(model) {
@@ -230,6 +233,7 @@ function unseen_spk() {
   let models_path = ["Model1", "Model2", "Model3", "Model4", "Model5", "Model6", "Model7"];
   let data = `
       <colgroup>
+        <col style="width: 5%;"> <!-- Sequence number column -->
         <col style="width: 10%;"> <!-- Reference speaker column -->
         <col style="width: 20%;"> <!-- Text column -->
   `;
@@ -241,6 +245,7 @@ function unseen_spk() {
   
   data += `</colgroup>
       <tr>
+        <th><strong>No.</strong></th>
         <th style=""><strong>Reference Speaker</strong></th>
         <th style=""><strong>Text</strong></th>
   `;
@@ -251,13 +256,14 @@ function unseen_spk() {
   
   data += '</tr>';
   
-  scenes.forEach(function(scene) {
+  scenes.forEach(function(scene, index) {
     let file = scene[0];
     let spk = scene[1];
     let text = scene[2];
     let scene_data = "";
   
     scene_data += '<tr>';
+    scene_data += '<td style="text-align: center;">' + (index + 1) + '</td>';
     scene_data += '<td style=""><audio controls="" style="width: 100%;" controls src="' + './raw/demos/Ref/' + spk + '_spk.wav' + '"></audio></td>';
     scene_data += '<td style=" font-size: 14px">' + text + '</td>';
     models_path.forEach(function(model) {
