@@ -5,38 +5,36 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
-  <title>DetailTTS Demo</title>
+  <title>DetailTTS: Learning Residual Detail Information for Zero-shot Text-to-speech</title>
   <meta name="generator" content="Jekyll v3.9.0">
   <meta property="og:title" content="title">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#157878">
+  <meta name="theme-color" content="#66ccff">
   <link rel="stylesheet" href="style.css">
   <style>
+    p {
+      text-indent: 2em;
+    }
+
     .method {
       display: inline-block;
-      /*             width: 120px; /* Adjust the width as needed */
       font-weight: bold;
     }
 
     .explanation {
       display: inline-block;
-      /*             margin-left: 20px; /* Adjust the margin as needed */
-
     }
 
     .centered-table {
       width: 50%;
-      /* Adjust this value to make the table smaller or larger */
       border-collapse: collapse;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-      /* Adds a shadow around the table */
       margin-top: 20px;
       margin-bottom: 20px;
       background: white;
-      /* Background color for the table */
       margin-left: auto;
       margin-right: auto;
     }
@@ -44,18 +42,14 @@
     .centered-table th,
     .centered-table td {
       border: 1px solid #ddd;
-      /* Lighter border color for a softer look */
       text-align: center;
       padding: 10px;
       font-size: 0.85em;
-      /* Smaller font size */
     }
 
     .centered-table th {
       background-color: #f2f2f2;
-      /* Light grey background for the header */
       color: #333;
-      /* Darker text color for contrast */
     }
 
     .centered-table caption {
@@ -64,10 +58,8 @@
       margin-bottom: 10px;
       text-align: center;
       font-size: 1.1em;
-      /* Slightly larger font size for caption */
     }
 
-    /* Add a color gradient to row hover */
     .centered-table tr:hover {
       background-color: #f5f5f5;
     }
@@ -88,51 +80,90 @@
       font-weight: bold;
       margin-right: 5px;
       flex: 0 0 auto;
-      /* Prevents flex items from growing or shrinking */
     }
 
     .model-description {
       flex-grow: 1;
-      /* Allows the description to fill the remaining space */
-    }
-
-    .basic {
-      color: #FF0000;
-    }
-
-    .standard {
-      color: #FFD700;
-    }
-
-    .premium {
-      color: #00FF7F;
-    }
-
-    .reset {
-      color: #cfcecb;
     }
   </style>
 </head>
 
 <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
   <section class="page-header">
-    <!-- <h1 class="project-name">Demo PAGE</h1> -->
-    <!-- <h2 class="project-tagline"></h2> -->
-
-
   </section>
 
   <section class="main-content">
     <h1 id="">
-      <center>DetailTTS</center>
+      <center>DetailTTS: Learning Residual Detail Information <br>for Zero-shot Text-to-speech</center>
     </h1>
 
-    <h3 id="">
-      <center> DetailTTS team</center>
-    </h3>
+    <center>
+      <font size="4">(Submitted on ICASSP 2025)</font>
+    </center>
 
-    <h2>Zero-Shot TTS Samples <a name="Comparison"></a></h2>
+    <center><b>
+        <font size="4">Authors</font>
+      </b>: <i>
+        <font size="4">Cong Wang<sup>1</sup>, Yichen Han<sup>1</sup>, Yizhong Geng<sup>1</sup>, Yingming
+          Gao<sup>1</sup>,<br> Fengping Wang<sup>1</sup>, Bingsong Bai<sup>1</sup>, Qifei Li<sup>1</sup>, Jinlong
+          Xue<sup>1</sup>, Yayue Deng<sup>1</sup>, Zhengqi Wen<sup>2</sup>, Ya Li<sup>1,*</sup></font>
+      </i></center>
+    <center>
+      <font size="4"><sup>1</sup>Beijing University of Posts and Telecommunications, Beijing, China</font>
+    </center>
+    <center>
+      <font size="4"><sup>2</sup>Tsinghua University, Beijing, China</font>
+    </center>
 
+    <br>
+    <center>
+      <a href="https://github.com/adelacvg/ttts">Source Code</a> &
+      <a href="https://huggingface.co/adelacvg/TTTS_v4">Pre-trained Model</a> &
+      <a href="https://colab.research.google.com/github/adelacvg/ttts/blob/v4/demo.ipynb">Colab Demo</a>
+    </center>
+    <center><i>
+        <font size="2">(The code and models for the paper are being prepared.)</font>
+      </i></center>
+
+    <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+    <p>Traditional text-to-speech (TTS) systems often face challenges in aligning text and speech, leading to the
+      omission of critical linguistic and acoustic details. This misalignment creates an information gap, which existing
+      methods attempt to address by incorporating additional inputs, but these often introduce data inconsistencies and
+      increase complexity. To address these issues, we propose <b>DetailTTS</b>, a zero-shot TTS system based on
+      a conditional variational autoencoder. It incorporates two key components: the Prior Detail Module and the
+      Duration Detail Module, which capture residual detail information missed during alignment. These modules
+      effectively enhance the model’s ability to retain fine-grained details, significantly improving speech quality
+      while simplifying the model by obviating the need for additional inputs. Experiments on the <a
+        href="https://huggingface.co/datasets/Wenetspeech4TTS/WenetSpeech4TTS">WenetSpeech4TTS dataset</a> show that
+      DetailTTS outperforms traditional TTS systems in both <b>naturalness</b> and <b>speaker similarity</b>, even in
+      zero-shot scenarios.</p>
+
+    <h2 id="Model Architecture">2. Model Architecture<a name="Model Architecture"></a></h2>
+    <p>
+      <center>
+        <img src="./img/overview.png" width="80%">
+      </center>
+      <br>
+      <caption>
+        <font size="2">Fig. 1. The overall framework of DetailTTS, incorporating two key detail encoding modules: the
+          Prior
+          Detail Module and the Duration Detail Module. These modules learn to capture residual detail information
+          during
+          training, allowing them to provide this information even during inference with only text input, thereby
+          improving the quality of the synthesized speech.</font>
+      </caption>
+      <center><img src="./img/duration.png" width="60%"></center>
+      <br>
+      <caption>
+        <font size="2">Fig. 2. The duration detail module enhances the duration predictor by learning residual detail
+          information during training. This allows the module to provide refined duration information even during
+          inference with only text input, leading to more accurate and natural speech synthesis.</font>
+      </caption>
+      </center>
+    </p>
+
+
+    <h2>3. Zero-Shot TTS Samples <a name="Comparison"></a></h2>
     <h3>Seen Speakers </h3>
     <table style="max-width:100%;table-layout: fixed;">
       <tbody id="tbody_seen">
@@ -144,24 +175,34 @@
       </tbody>
     </table>
 
+    <h2 id="Experiments & Results">4. t-SNE<a name="Experiments & Results"></a></h2>
+    <p>
+      <center><img src="./img/t-SNE.png" width="40%"></center>
+    </p>
+    <p>We randomly selecte 15 speakers from the test dataset and conducted t-SNE visualization of the speaker embeddings
+      for their synthesized and real speech. The speaker embeddings of synthesized speech and ground truth from the same
+      speaker are closely clustered together, further demonstrating the superiority of our method in terms of speaker
+      similarity.</p>
+
+
 
 </html>
 
 <script type="" text/javascript>
 function seen_spk() {
   let scenes = [
-    ["text18","seen1","应该给千千万万还在路上的创业者致意。(We should pay tribute to the millions of entrepreneurs who are still on their journey.)"],
-    ["text19","seen1","准确点说，小森林是一部美食类电影食物佳肴，贯穿了柿子的寒暑交替四十三餐。(To be precise, 'Little Forest' is a gourmet movie that features forty-three meals, showcasing the seasonal changes of persimmons.)"],
-    ["text20","seen2","要大力开展全省网吧专项整治工作，加强网络文化内容的整治，深入开展低俗音像制品清查行动。(It is necessary to vigorously carry out special rectification work on internet cafes across the province, strengthen the regulation of online cultural content, and thoroughly conduct a cleanup operation of vulgar audio-visual products.)"],
-    ["text22","seen2","因为这是我们法律存在的前提。(Because this is the premise for the existence of our law.)"],
-    ["text21","seen3","书记旗县市长乡镇苏木长企事业负责人以及国营农牧场的老兵团们，像赶庙会似的你挤我扛，口里说着，手里记着。(Secretaries, county and town mayors, township and sumu leaders, heads of enterprises and institutions, as well as veteran groups from state-owned farms and pastures, jostled like they were attending a temple fair, talking and taking notes.)"],
-    ["text9","seen3","哎，不是有一句话这样说嘛，你永远不知道明天和意外哪个先来。(Alas, isn't there a saying that you never know whether tomorrow or an accident will come first?)"],
-    ["text23","seen4","湿热天最麻烦的还属家中的煤气，早上起来，连拌果酱的木铲也发霉了。(On humid and hot days, the biggest nuisance is the gas at home; even the wooden spatula for stirring jam gets moldy.)"],
-    ["text5","seen4","这时，朱警官等人才发现小男孩腿脚也异常，根本走不了路。(At this moment, Officer Zhu and others discovered that the little boy's legs were abnormal, and he couldn't walk at all.)"]
+    ["text1","seen1","应该给千千万万还在路上的创业者致意。(We should pay tribute to the millions of entrepreneurs who are still on their journey.)"],
+    ["text2","seen1","准确点说，小森林是一部美食类电影食物佳肴，贯穿了柿子的寒暑交替四十三餐。(To be precise, 'Little Forest' is a gourmet movie that features forty-three meals, showcasing the seasonal changes of persimmons.)"],
+    ["text3","seen2","要大力开展全省网吧专项整治工作，加强网络文化内容的整治，深入开展低俗音像制品清查行动。(It is necessary to vigorously carry out special rectification work on internet cafes across the province, strengthen the regulation of online cultural content, and thoroughly conduct a cleanup operation of vulgar audio-visual products.)"],
+    ["text4","seen2","因为这是我们法律存在的前提。(Because this is the premise for the existence of our law.)"],
+    ["text5","seen3","书记旗县市长乡镇苏木长企事业负责人以及国营农牧场的老兵团们，像赶庙会似的你挤我扛，口里说着，手里记着。(Secretaries, county and town mayors, township and sumu leaders, heads of enterprises and institutions, as well as veteran groups from state-owned farms and pastures, jostled like they were attending a temple fair, talking and taking notes.)"],
+    ["text6","seen3","哎，不是有一句话这样说嘛，你永远不知道明天和意外哪个先来。(Alas, isn't there a saying that you never know whether tomorrow or an accident will come first?)"],
+    ["text7","seen4","湿热天最麻烦的还属家中的煤气，早上起来，连拌果酱的木铲也发霉了。(On humid and hot days, the biggest nuisance is the gas at home; even the wooden spatula for stirring jam gets moldy.)"],
+    ["text8","seen4","这时，朱警官等人才发现小男孩腿脚也异常，根本走不了路。(At this moment, Officer Zhu and others discovered that the little boy's legs were abnormal, and he couldn't walk at all.)"]
 
   ];
-  let models = ["Model1", "Model2", "Model3", "Model4", "Model5", "Model6", "Model7"];
-  let models_path = ["Model1", "Model2", "Model3", "Model4", "Model5", "Model6", "Model7"];
+  let models = ["VALL-E", "NaturalSpeech2", "DetailTTS(Ours)"];
+  let models_path = ["VALL-E", "NaturalSpeech2", "DetailTTS"];
   let data = `
       <colgroup>
         <col style="width: 5%;"> <!-- Sequence number column -->
@@ -210,27 +251,17 @@ function seen_spk() {
 
 function unseen_spk() {
   let scenes = [
-["text5","unseen3","这时，朱警官等人才发现小男孩腿脚也异常，根本走不了路。(At this moment, Officer Zhu and others discovered that the little boy's legs were abnormal, and he couldn't walk at all.)"],
-    ["text6","unseen3","哎，我现在兜里只剩八十块钱了，咱们俩就随便看一下，标准件就完了。(Alas, I only have eighty yuan left in my pocket now. Let's just have a casual look, and then we're done with the standard items.)"],
-    ["text7","unseen4","按照科学的知识来说这是因为蓝色更加容易散射哦，宝宝以后就会学到的哦。(According to scientific knowledge, this is because blue scatters more easily, and you will learn about this later, baby.)"],
-    ["text8","unseen4","他一度梦想参军，但是因没身份而作罢，整日在村内瞎晃。(He once dreamed of joining the army, but gave up due to lack of identification, and wandered aimlessly in the village all day.)"],
-    ["text9","unseen5","哎，不是有一句话这样说嘛，你永远不知道明天和意外哪个先来。(Alas, isn't there a saying that you never know whether tomorrow or an accident will come first?)"],
-    ["text10","unseen5","当时有点感动还是什么？(Was it a bit touching or something at that time?)"],
-    ["text11","unseen6","这些飞机仍然由位于华盛顿州埃弗里特的工厂生产。(These planes are still produced by the factory located in Everett, Washington State.)"],
-    ["text12","unseen6","派大军前去争抢，赫赫查拉二话不说，喊出了巴顿的名字，结果手套开始传递给斯科特半路遭到灭霸拦截，真正的杀神从天而降。(A large army was sent to compete, Hehe Chala without hesitation called out Barton's name, resulting in the gauntlet being passed to Scott halfway, only to be intercepted by Thanos, as the true god of death descended from the heavens.)"],
-    ["text13","unseen7","以后我们大概不会再见面了。(We probably won't see each other again in the future.)"],
-    ["text14","unseen7","而中国却只是将其作为红旗反导系统下的一个补充而已。(And China merely considers it a supplement under the HQ anti-missile system.)"],
-    ["text15","unseen8","这一段戏同样也表达了亚瑟说的，我原本以为我的人生是一出悲剧，但其实它是一出戏剧。(This part of the play also expressed what Arthur said, 'I used to think my life was a tragedy, but actually, it's a comedy.')"],
-    ["text16","unseen8","常常暴跳如雷，红着眼睛用力攥着洛洛的手，把洛洛的手攥得生疼也不撒手。洛洛吓坏了，她很害怕，那个平日里对她那么好的男友为什么会变得这么可怕？(Often flying into a rage, his eyes red, he would grip Lolo's hand tightly, causing her pain without letting go. Lolo was terrified. She wondered why her boyfriend, who was so good to her on normal days, could become so frightening.)"],
-    ["text17","unseen9","或者看一下他的状态。(Or take a look at his condition.)"],
-    ["text13","unseen9","以后我们大概不会再见面了。(We probably won't see each other again in the future.)"],
-    ["text1","unseen1","目前，我还没有给会所取好名字。(Currently, I haven't come up with a good name for the club yet.)"],
-    ["text2","unseen1","史堡村的一名癌症患者。(A cancer patient from Shibu Village.)"],
-    ["text3","unseen2","一句话，压缩他们的成熟期。(In a word, it shortens their maturation period.)"],
-    ["text4","unseen2","妮可拿着胡萝卜亲自给长颈鹿喂食，并鼓励女儿也跟着做。(Nicole personally feeds the giraffe with carrots and encourages her daughter to do the same.)"]
+    ["text1","unseen1","他一度梦想参军，但是因没身份而作罢，整日在村内瞎晃。(He once dreamed of joining the army, but gave up due to lack of identification, and wandered aimlessly in the village all day.)"],
+    ["text2","unseen2","哎，不是有一句话这样说嘛，你永远不知道明天和意外哪个先来。(Alas, isn't there a saying that you never know whether tomorrow or an accident will come first?)"],
+    ["text3","unseen2","当时有点感动还是什么？(Was it a bit touching or something at that time?)"],
+    ["text4","unseen3","这些飞机仍然由位于华盛顿州埃弗里特的工厂生产。(These planes are still produced by the factory located in Everett, Washington State.)"],
+    ["text5","unseen3","派大军前去争抢，赫赫查拉二话不说，喊出了巴顿的名字，结果手套开始传递给斯科特半路遭到灭霸拦截，真正的杀神从天而降。(A large army was sent to compete, Hehe Chala without hesitation called out Barton's name, resulting in the gauntlet being passed to Scott halfway, only to be intercepted by Thanos, as the true god of death descended from the heavens.)"],
+    ["text6","unseen4","而中国却只是将其作为红旗反导系统下的一个补充而已。(And China merely considers it a supplement under the HQ anti-missile system.)"],
+    ["text7","unseen5","这一段戏同样也表达了亚瑟说的，我原本以为我的人生是一出悲剧，但其实它是一出戏剧。(This part of the play also expressed what Arthur said, 'I used to think my life was a tragedy, but actually, it's a comedy.')"],
+    ["text8","unseen5","常常暴跳如雷，红着眼睛用力攥着洛洛的手，把洛洛的手攥得生疼也不撒手。洛洛吓坏了，她很害怕，那个平日里对她那么好的男友为什么会变得这么可怕？(Often flying into a rage, his eyes red, he would grip Lolo's hand tightly, causing her pain without letting go. Lolo was terrified. She wondered why her boyfriend, who was so good to her on normal days, could become so frightening.)"],
   ];
-  let models = ["Model1", "Model2", "Model3", "Model4", "Model5", "Model6", "Model7"];
-  let models_path = ["Model1", "Model2", "Model3", "Model4", "Model5", "Model6", "Model7"];
+  let models = ["VALL-E", "NaturalSpeech2", "DetailTTS(Ours)"];
+  let models_path = ["VALL-E", "NaturalSpeech2", "DetailTTS"];
   let data = `
       <colgroup>
         <col style="width: 5%;"> <!-- Sequence number column -->
@@ -238,9 +269,9 @@ function unseen_spk() {
         <col style="width: 20%;"> <!-- Text column -->
   `;
   
-  // Dynamically adding cols for each model
+
   models.forEach(function() {
-    data += '<col style="width: 10%;">'; // Adjust the width as necessary
+    data += '<col style="width: 10%;">';
   });
   
   data += `</colgroup>
@@ -282,5 +313,5 @@ window.onload = function() {
   document.getElementById('tbody_unseen').innerHTML = unseen_spk()
 }
 
- 
+
 </script>
